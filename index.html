@@ -187,8 +187,8 @@
                         </div>
                     </div>
 
-                    <button onclick="closeSuccessModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow-md text-sm transition">
-                        Selesai / Kembali
+                    <button onclick="closeSuccessModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm shadow transition">
+                        Selesai & Kembali
                     </button>
                 </div>
             </div>
@@ -196,7 +196,7 @@
         </div>
 
         <!-- ============================================================== -->
-        <!-- VIEW 2: ADMIN / GURU VIEW (TERKLIK/TERKUNCI PIN DEFAULT 1234)  -->
+        <!-- VIEW 2: ADMIN / GURU VIEW (TERKLIK/TERKUNCI PIN)               -->
         <!-- ============================================================== -->
         <div id="viewAdmin" class="hidden space-y-6">
             
@@ -207,7 +207,7 @@
                         Portal Guru & Pengelola
                     </span>
                     <h2 class="font-extrabold text-lg sm:text-xl text-white mt-1">Dashboard Rekapitulasi Presensi</h2>
-                    <p class="text-xs text-slate-400">Kelola master siswa, spreadsheet, cetak QR poster kelas, dan rekap harian.</p>
+                    <p class="text-xs text-slate-400">Kelola master siswa, spreadsheet, cetak QR poster kelas, dan kunci lokasi GPS.</p>
                 </div>
                 <button onclick="logoutAdmin()" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-xs font-bold px-3.5 py-2 rounded-xl transition flex items-center gap-1.5">
                     <i class="fa-solid fa-right-from-bracket"></i> Keluar Portal
@@ -227,6 +227,9 @@
                 </button>
                 <button onclick="switchAdminTab('sheet')" id="tabAdmin-sheet" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 text-slate-500 hover:text-emerald-600">
                     <i class="fa-solid fa-file-spreadsheet"></i> Pengaturan Spreadsheet
+                </button>
+                <button onclick="switchAdminTab('gps')" id="tabAdmin-gps" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 text-slate-500 hover:text-emerald-600">
+                    <i class="fa-solid fa-location-dot"></i> Kunci GPS Sekolah
                 </button>
             </div>
 
@@ -406,57 +409,57 @@
                             <input type="url" id="inputGasUrl" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-xs sm:text-sm rounded-xl p-3 font-mono focus:ring-2 focus:ring-emerald-500">
                         </div>
 
-                        <div class="flex gap-2">
-                            <button onclick="saveGasUrl()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-5 rounded-xl shadow text-xs sm:text-sm flex items-center gap-2 transition">
-                                <i class="fa-solid fa-floppy-disk"></i> Simpan Webhook URL
+                        <button onclick="saveGasUrl()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-5 rounded-xl shadow transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan Webhook URL
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADMIN TAB 5: KUNCI LOKASI GPS (ANTI-TITIP ABSEN DARI RUMAH) -->
+            <div id="secAdmin-gps" class="admin-tab-content hidden space-y-6">
+                <div class="glass-card rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <h3 class="font-extrabold text-slate-800 text-lg mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-street-view text-emerald-600"></i> Proteksi Lokasi GPS (Geofencing)
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-5">Mencegah murid melakukan presensi dari rumah menggunakan bookmark/riwayat browser. Murid hanya bisa absen jika berada di dalam radius sekolah.</p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-800">Aktifkan Pembatasan GPS</h4>
+                                <p class="text-xs text-slate-500">Wajibkan HP murid mendeteksi lokasi sekolah saat submit presensi</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="gpsEnableToggle" onchange="saveGpsSettings()" class="sr-only peer">
+                                <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                            </label>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Latitude Sekolah</label>
+                                <input type="text" id="gpsLat" placeholder="-7.123456" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Longitude Sekolah</label>
+                                <input type="text" id="gpsLng" placeholder="112.123456" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Max Radius (Meter)</label>
+                                <input type="number" id="gpsRadius" placeholder="150" value="150" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold">
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <button onclick="getCurrentDeviceLocation()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center gap-1.5 shadow transition">
+                                <i class="fa-solid fa-crosshairs"></i> Deteksi Lokasi HP Saya Sekarang
+                            </button>
+                            <button onclick="saveGpsSettings()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs flex items-center gap-1.5 shadow transition">
+                                <i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan GPS
                             </button>
                         </div>
                     </div>
-                </div>
-
-                <!-- Apps Script Code Box -->
-                <div class="glass-card rounded-2xl p-6 shadow-sm border border-slate-200">
-                    <div class="flex justify-between items-center mb-2">
-                        <h4 class="font-bold text-slate-800 text-sm">Kode Skrip Google Apps Script (Paste di Google Sheets)</h4>
-                        <button onclick="copyGasCode()" class="text-xs bg-emerald-100 text-emerald-800 hover:bg-emerald-200 font-bold px-3 py-1.5 rounded-lg border border-emerald-300 transition">
-                            <i class="fa-solid fa-copy mr-1"></i> Salin Kode Skrip
-                        </button>
-                    </div>
-                    
-                    <pre class="bg-slate-900 text-emerald-400 p-4 rounded-xl text-[11px] font-mono overflow-x-auto max-h-56 custom-scrollbar border border-slate-800" id="codeGasSnippet">
-function doPost(e) {
-  try {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var data = JSON.parse(e.postData.contents);
-    
-    // Auto Header jika sheet masih baru/kosong
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(["Timestamp", "Tanggal", "Waktu", "Kelas", "Nama Siswa", "Status Kehadiran", "Catatan"]);
-      sheet.getRange(1, 1, 1, 7).setFontWeight("bold").setBackground("#047857").setFontColor("#FFFFFF");
-    }
-    
-    sheet.appendRow([
-      data.timestamp || new Date(),
-      data.tanggal || "",
-      data.waktu || "",
-      data.kelas || "",
-      data.nama || "",
-      data.status || "",
-      data.keterangan || ""
-    ]);
-    
-    return ContentService.createTextOutput(JSON.stringify({ "result": "success" }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({ "result": "error", "message": err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
-
-function doGet(e) {
-  return ContentService.createTextOutput("API Presensi MTs Mambaul Ulum Aktif!");
-}
-                    </pre>
                 </div>
             </div>
 
@@ -501,6 +504,9 @@ function doGet(e) {
         // =========================================================================
         const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbynsbpXRxFa3lT8fbJ30ltF7NoCqrtyqa6z46-tGVM9ytT3w9sa-BTrJ-gXseat6BVshA/exec"; 
 
+        // 🔑 GANTI PIN GURU DI SINI (Ubah "1234" dengan PIN rahasia Anda, misal: "5678"):
+        const ADMIN_PIN_DEFAULT = "1985"; 
+
         const DEFAULT_DATA_MURID = {
             "7": ["Ahmad Fauzi", "Anisa Rahmawati", "Bagas Pratama", "Cinta Laura", "Dimas Anggara", "Eka Putri", "Faris Hidayat"],
             "8": ["Lutfi Hasan", "M. Rizky Mubarak", "Nabila Syakieb", "Oki Setiana", "Putri Ayu"],
@@ -508,11 +514,17 @@ function doGet(e) {
         };
 
         let DATA_MURID = {};
-        // 🔑 GANTI PIN GURU DI SINI (Ubah "1234" dengan PIN rahasia Anda, misal: "5678"):
-        const ADMIN_PIN_DEFAULT = "1985"; 
         let localLogs = [];
         let gasWebhookUrl = localStorage.getItem('MTS_GAS_URL') || DEFAULT_GAS_URL;
         let isAdminLoggedIn = false;
+
+        // Configuration for GPS Geofencing
+        let gpsConfig = JSON.parse(localStorage.getItem('MTS_GPS_CONFIG')) || {
+            enabled: false,
+            lat: 0,
+            lng: 0,
+            radius: 150 // Meters
+        };
 
         window.addEventListener('DOMContentLoaded', () => {
             loadMasterDataMurid();
@@ -523,6 +535,7 @@ function doGet(e) {
             loadSavedGasUrl();
             generatePosterQR();
             populateKelasDropdowns();
+            loadGpsSettingsUI();
         });
 
         function loadMasterDataMurid() {
@@ -714,6 +727,56 @@ function doGet(e) {
                 return;
             }
 
+            // Jika proteksi GPS diaktifkan oleh Sekolah
+            if (gpsConfig.enabled) {
+                if (!navigator.geolocation) {
+                    showToast("Browser Anda tidak mendukung deteksi lokasi GPS!", "error");
+                    return;
+                }
+
+                const btnSubmit = document.getElementById('btnStudentSubmit');
+                btnSubmit.disabled = true;
+                btnSubmit.innerHTML = '<i class="fa-solid fa-location-dot animate-ping"></i> Memeriksa Lokasi Sekolah...';
+
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        const distance = calculateDistance(pos.coords.latitude, pos.coords.longitude, gpsConfig.lat, gpsConfig.lng);
+                        if (distance > gpsConfig.radius) {
+                            btnSubmit.disabled = false;
+                            btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane text-xl"></i> KIRIM PRESENSI SEKARANG';
+                            showToast(`Gagal! Anda berada di luar area sekolah (${Math.round(distance)}m dari titik sekolah).`, "error");
+                        } else {
+                            processStudentSubmission(kelas, nama, status, keteranganInput);
+                        }
+                    },
+                    (err) => {
+                        btnSubmit.disabled = false;
+                        btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane text-xl"></i> KIRIM PRESENSI SEKARANG';
+                        showToast("Aktifkan izin GPS/Lokasi di HP Anda untuk melakukan presensi!", "warning");
+                    },
+                    { enableHighAccuracy: true, timeout: 10000 }
+                );
+            } else {
+                processStudentSubmission(kelas, nama, status, keteranganInput);
+            }
+        }
+
+        // Helper: Calculate Haversine Distance in meters
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371e3; // Earth radius in meters
+            const φ1 = lat1 * Math.PI/180;
+            const φ2 = lat2 * Math.PI/180;
+            const Δφ = (lat2-lat1) * Math.PI/180;
+            const Δλ = (lon2-lon1) * Math.PI/180;
+
+            const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+                      Math.cos(φ1) * Math.cos(φ2) *
+                      Math.sin(Δλ/2) * Math.sin(Δλ/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function processStudentSubmission(kelas, nama, status, keteranganInput) {
             const now = new Date();
             const jam = now.getHours();
             const menit = now.getMinutes();
@@ -981,6 +1044,38 @@ function doGet(e) {
             showToast(url ? "Webhook URL berhasil disimpan!" : "URL dikosongkan.", "info");
         }
 
+        function loadGpsSettingsUI() {
+            document.getElementById('gpsEnableToggle').checked = gpsConfig.enabled;
+            document.getElementById('gpsLat').value = gpsConfig.lat || '';
+            document.getElementById('gpsLng').value = gpsConfig.lng || '';
+            document.getElementById('gpsRadius').value = gpsConfig.radius || 150;
+        }
+
+        function saveGpsSettings() {
+            gpsConfig.enabled = document.getElementById('gpsEnableToggle').checked;
+            gpsConfig.lat = parseFloat(document.getElementById('gpsLat').value) || 0;
+            gpsConfig.lng = parseFloat(document.getElementById('gpsLng').value) || 0;
+            gpsConfig.radius = parseInt(document.getElementById('gpsRadius').value) || 150;
+
+            localStorage.setItem('MTS_GPS_CONFIG', JSON.stringify(gpsConfig));
+            showToast("Pengaturan Kunci GPS berhasil disimpan!", "success");
+        }
+
+        function getCurrentDeviceLocation() {
+            if (!navigator.geolocation) {
+                showToast("Browser tidak mendukung GPS", "error");
+                return;
+            }
+            showToast("Mendeteksi koordinat lokasi saat ini...", "info");
+            navigator.geolocation.getCurrentPosition(pos => {
+                document.getElementById('gpsLat').value = pos.coords.latitude.toFixed(6);
+                document.getElementById('gpsLng').value = pos.coords.longitude.toFixed(6);
+                showToast("Koordinat lokasi berhasil didapatkan!", "success");
+            }, err => {
+                showToast("Gagal mengambil lokasi. Pastikan GPS HP aktif!", "error");
+            }, { enableHighAccuracy: true });
+        }
+
         function exportToCSV() {
             const fullRoster = getFullRosterWithStatus();
             if (fullRoster.length === 0) {
@@ -1009,17 +1104,6 @@ function doGet(e) {
             localStorage.removeItem('MTS_PRESENSI_LOGS');
             renderAdminTable();
             showToast("Log presensi berhasil dibersihkan.", "info");
-        }
-
-        function copyGasCode() {
-            const codeText = document.getElementById('codeGasSnippet').innerText;
-            const textarea = document.createElement('textarea');
-            textarea.value = codeText;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            showToast("Kode skrip Apps Script disalin ke clipboard!", "success");
         }
 
         function showToast(message, type = 'info') {
