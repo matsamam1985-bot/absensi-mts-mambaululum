@@ -471,7 +471,7 @@ function doGet(e) {
                 <i class="fa-solid fa-lock"></i>
             </div>
             <h3 class="font-extrabold text-slate-800 text-base mb-1">Masukkan PIN Guru</h3>
-            <p class="text-xs text-slate-500 mb-4">Masuk ke Portal Rekap & Pengaturan (Default PIN: <strong class="text-emerald-700">1234</strong>)</p>
+            <p class="text-xs text-slate-500 mb-4">Masuk ke Portal Rekap & Pengaturan</p>
 
             <form onsubmit="verifyAdminPin(event)">
                 <input type="password" id="inputAdminPin" maxlength="6" autofocus placeholder="Masukkan PIN" class="w-full text-center text-xl font-mono tracking-widest bg-slate-100 border border-slate-300 rounded-xl p-2.5 mb-4 focus:ring-2 focus:ring-emerald-500">
@@ -495,19 +495,23 @@ function doGet(e) {
     </footer>
 
     <script>
+        // =========================================================================
+        // ⚠️ ISIKAN URL SPREADSHEET (APPS SCRIPT) ANDA DI DALAM TANDA PETIK DI BAWAH:
+        // Contoh: "https://script.google.com/macros/s/AKfycb.../exec"
+        // =========================================================================
+        const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbynsbpXRxFa3lT8fbJ30ltF7NoCqrtyqa6z46-tGVM9ytT3w9sa-BTrJ-gXseat6BVshA/exec"; 
+
         const DEFAULT_DATA_MURID = {
-            "7A": ["Ahmad Fauzi", "Anisa Rahmawati", "Bagas Pratama", "Cinta Laura", "Dimas Anggara", "Eka Putri", "Faris Hidayat"],
-            "7B": ["Fajar Ramadhan", "Gita Gutawa", "Hafiz Syahputra", "Indah Permata", "Joko Widodo", "Kharisma Putri"],
-            "8A": ["Lutfi Hasan", "M. Rizky Mubarak", "Nabila Syakieb", "Oki Setiana", "Putri Ayu"],
-            "8B": ["Qori Sandioriva", "Randi Pangalila", "Siti Nurhaliza", "Taufik Hidayat", "Umar Bakri"],
-            "9A": ["Vina Panduwinata", "Wahyu Hidayat", "Xander Utama", "Yuni Shara", "Zainuddin MZ"],
-            "9B": ["Aisyah Aqilah", "Bahrul Alam", "Dian Sastrowardoyo", "Hamzah Haz", "Zaskia Gotik"]
+            "7": ["Ahmad Fauzi", "Anisa Rahmawati", "Bagas Pratama", "Cinta Laura", "Dimas Anggara", "Eka Putri", "Faris Hidayat"],
+            "8": ["Lutfi Hasan", "M. Rizky Mubarak", "Nabila Syakieb", "Oki Setiana", "Putri Ayu"],
+            "9": ["Vina Panduwinata", "Wahyu Hidayat", "Xander Utama", "Yuni Shara", "Zainuddin MZ"],
         };
 
         let DATA_MURID = {};
-        const ADMIN_PIN_DEFAULT = "1234";
+        // 🔑 GANTI PIN GURU DI SINI (Ubah "1234" dengan PIN rahasia Anda, misal: "5678"):
+        const ADMIN_PIN_DEFAULT = "1985"; 
         let localLogs = [];
-        let gasWebhookUrl = localStorage.getItem('MTS_GAS_URL') || '';
+        let gasWebhookUrl = localStorage.getItem('MTS_GAS_URL') || DEFAULT_GAS_URL;
         let isAdminLoggedIn = false;
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -540,36 +544,30 @@ function doGet(e) {
         }
 
         function populateKelasDropdowns() {
-            // Populate Student Select Kelas
             const studentSelect = document.getElementById('studentSelectKelas');
             const currentStudentVal = studentSelect.value;
             studentSelect.innerHTML = '<option value="" disabled selected>-- Pilih Kelas Anda --</option>';
 
-            // Populate Filter Kelas Table Admin
             const filterSelect = document.getElementById('filterKelasTable');
             const currentFilterVal = filterSelect.value;
             filterSelect.innerHTML = '<option value="ALL">Semua Kelas</option>';
 
-            // Populate Admin Edit Select Kelas
             const editSelect = document.getElementById('adminSelectKelasEdit');
             const currentEditVal = editSelect.value;
             editSelect.innerHTML = '';
 
             const kelasList = Object.keys(DATA_MURID).sort();
             kelasList.forEach(kelas => {
-                // Student dropdown
                 const opt1 = document.createElement('option');
                 opt1.value = kelas;
                 opt1.textContent = 'Kelas ' + kelas;
                 studentSelect.appendChild(opt1);
 
-                // Filter dropdown
                 const opt2 = document.createElement('option');
                 opt2.value = kelas;
                 opt2.textContent = 'Kelas ' + kelas;
                 filterSelect.appendChild(opt2);
 
-                // Edit dropdown
                 const opt3 = document.createElement('option');
                 opt3.value = kelas;
                 opt3.textContent = 'Kelas ' + kelas;
@@ -746,7 +744,6 @@ function doGet(e) {
                 payload.destination = serverStatus;
                 saveRecordLocally(payload);
 
-                // Populate Modal Success
                 document.getElementById('resNama').textContent = nama;
                 document.getElementById('resKelas').textContent = kelas;
                 document.getElementById('resStatus').textContent = status;
@@ -754,7 +751,6 @@ function doGet(e) {
 
                 document.getElementById('modalSuccess').classList.remove('hidden');
 
-                // Reset Form
                 document.getElementById('studentSelectNama').value = '';
                 document.getElementById('studentInputKeterangan').value = '';
 
@@ -762,8 +758,10 @@ function doGet(e) {
                 btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane text-xl"></i> KIRIM PRESENSI SEKARANG';
             };
 
-            if (gasWebhookUrl && gasWebhookUrl.startsWith('http')) {
-                fetch(gasWebhookUrl, {
+            const targetUrl = gasWebhookUrl || DEFAULT_GAS_URL;
+
+            if (targetUrl && targetUrl.startsWith('http')) {
+                fetch(targetUrl, {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
@@ -776,7 +774,7 @@ function doGet(e) {
                 });
             } else {
                 setTimeout(() => {
-                    finishProcess("Mode Lokal");
+                    finishProcess("Mode Lokal (Webhook Belum Diisi)");
                 }, 400);
             }
         }
@@ -809,7 +807,7 @@ function doGet(e) {
                 document.getElementById('navRoleLabel').textContent = "Dashboard Guru";
                 switchView('admin');
             } else {
-                showToast("PIN Salah! Default PIN: 1234", "error");
+                showToast("PIN yang Anda masukkan salah!", "error");
                 document.getElementById('inputAdminPin').value = '';
             }
         }
@@ -970,8 +968,9 @@ function doGet(e) {
         }
 
         function loadSavedGasUrl() {
-            if (gasWebhookUrl) {
-                document.getElementById('inputGasUrl').value = gasWebhookUrl;
+            const activeUrl = gasWebhookUrl || DEFAULT_GAS_URL;
+            if (activeUrl) {
+                document.getElementById('inputGasUrl').value = activeUrl;
             }
         }
 
@@ -979,7 +978,7 @@ function doGet(e) {
             const url = document.getElementById('inputGasUrl').value.trim();
             gasWebhookUrl = url;
             localStorage.setItem('MTS_GAS_URL', url);
-            showToast(url ? "Webhook URL berhasil disimpan!" : "URL dikosongkan (Mode Lokal).", "info");
+            showToast(url ? "Webhook URL berhasil disimpan!" : "URL dikosongkan.", "info");
         }
 
         function exportToCSV() {
