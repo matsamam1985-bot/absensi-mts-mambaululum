@@ -231,6 +231,9 @@
                 <button onclick="switchAdminTab('gps')" id="tabAdmin-gps" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 text-slate-500 hover:text-emerald-600">
                     <i class="fa-solid fa-location-dot"></i> Kunci GPS Sekolah
                 </button>
+                <button onclick="switchAdminTab('waktu')" id="tabAdmin-waktu" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 text-slate-500 hover:text-emerald-600">
+                    <i class="fa-solid fa-business-time"></i> Batas Jam Operasional
+                </button>
             </div>
 
             <!-- ADMIN TAB 1: REKAP PRESENSI HARI INI -->
@@ -463,6 +466,46 @@
                 </div>
             </div>
 
+            <!-- ADMIN TAB 6: PENGATURAN BATAS JAM OPERASIONAL PRESENSI -->
+            <div id="secAdmin-waktu" class="admin-tab-content hidden space-y-6">
+                <div class="glass-card rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <h3 class="font-extrabold text-slate-800 text-lg mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-clock text-emerald-600"></i> Pengaturan Batas Waktu Presensi
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-5">Membatasi jam berapa murid diperbolehkan mengisi formulir presensi setiap harinya.</p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-800">Aktifkan Pembatasan Waktu</h4>
+                                <p class="text-xs text-slate-500">Tolak pengisian presensi di luar jam operasional yang ditentukan</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="timeEnableToggle" onchange="saveTimeSettings()" class="sr-only peer">
+                                <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                            </label>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Jam Buka Presensi (Mulai)</label>
+                                <input type="time" id="timeStartInput" value="06:30" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-extrabold text-slate-800 focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Jam Tutup Presensi (Selesai)</label>
+                                <input type="time" id="timeEndInput" value="14:00" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-extrabold text-slate-800 focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                        </div>
+
+                        <div class="pt-2">
+                            <button onclick="saveTimeSettings()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs flex items-center gap-1.5 shadow transition">
+                                <i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan Jam
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </main>
@@ -502,15 +545,18 @@
         // ⚠️ ISIKAN URL SPREADSHEET (APPS SCRIPT) ANDA DI DALAM TANDA PETIK DI BAWAH:
         // Contoh: "https://script.google.com/macros/s/AKfycb.../exec"
         // =========================================================================
-        const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbynsbpXRxFa3lT8fbJ30ltF7NoCqrtyqa6z46-tGVM9ytT3w9sa-BTrJ-gXseat6BVshA/exec"; 
+        const DEFAULT_GAS_URL = ""; 
 
         // 🔑 GANTI PIN GURU DI SINI (Ubah "1234" dengan PIN rahasia Anda, misal: "5678"):
-        const ADMIN_PIN_DEFAULT = "1985"; 
+        const ADMIN_PIN_DEFAULT = "1234"; 
 
         const DEFAULT_DATA_MURID = {
-            "7": ["ABDULLAH YUSUF EL AZAM AL FATAH", "AHMAD ALBERT RIDLWAN", "AHMAD KHOIRUL AZAM", "AINNUR QO'IDAH", "ANJANI ROBBANIYYAH", "EKA NAJWA AULIA", "RENY MU`TAMAROH", "SHARMA AQILLA AZZAHRA"],
-            "8": ["ACHMAD HAIKAL", "ADINDA NUR HUMAIRO", "ALESHA MADIHATU ZAHRO", "BRILLIANT HALIM RIDHWAN", "ELOK NUR KAMILAH", "FRISTA CANTIKA PUTRI KAYLA", "JALALUDDIN AR RUMI", "MASLIHATUL UMURIYAH", "MUHAMMAD ALIF IKHWAN", "MUHAMMAD DAVIN BELVA KUMARA", "MUHAMMAD FERI SETIAWAN", "MUHAMMAD RIZKY EKA SAPUTRA", "NABILA ALVIRA KHAIRUNNISA", "NAILA ALFIN NI`MAH", "QONITA NAJWA"],
-            "9": ["MUHAMMAD UZAIR", "AHMAD SYAUQI", "ISYNA FINURIKA", "M. ILHAM ROBBY SYADEWA PUTRA", "MUH LUCKY FATHU NIAM", "SALSABILA ULYAH RAMADHANI"],
+            "7A": ["Ahmad Fauzi", "Anisa Rahmawati", "Bagas Pratama", "Cinta Laura", "Dimas Anggara", "Eka Putri", "Faris Hidayat"],
+            "7B": ["Fajar Ramadhan", "Gita Gutawa", "Hafiz Syahputra", "Indah Permata", "Joko Widodo", "Kharisma Putri"],
+            "8A": ["Lutfi Hasan", "M. Rizky Mubarak", "Nabila Syakieb", "Oki Setiana", "Putri Ayu"],
+            "8B": ["Qori Sandioriva", "Randi Pangalila", "Siti Nurhaliza", "Taufik Hidayat", "Umar Bakri"],
+            "9A": ["Vina Panduwinata", "Wahyu Hidayat", "Xander Utama", "Yuni Shara", "Zainuddin MZ"],
+            "9B": ["Aisyah Aqilah", "Bahrul Alam", "Dian Sastrowardoyo", "Hamzah Haz", "Zaskia Gotik"]
         };
 
         let DATA_MURID = {};
@@ -526,6 +572,13 @@
             radius: 150 // Meters
         };
 
+        // Configuration for Time Restriction
+        let timeConfig = JSON.parse(localStorage.getItem('MTS_TIME_CONFIG')) || {
+            enabled: true,
+            startTime: "06:30",
+            endTime: "14:00"
+        };
+
         window.addEventListener('DOMContentLoaded', () => {
             loadMasterDataMurid();
             updateClock();
@@ -536,6 +589,7 @@
             generatePosterQR();
             populateKelasDropdowns();
             loadGpsSettingsUI();
+            loadTimeSettingsUI();
         });
 
         function loadMasterDataMurid() {
@@ -725,6 +779,28 @@
             if (!kelas || !nama) {
                 showToast("Silakan lengkapi Kelas dan Nama Anda!", "error");
                 return;
+            }
+
+            // Check Pembatasan Jam Operasional
+            if (timeConfig.enabled) {
+                const now = new Date();
+                const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+                const [startH, startM] = timeConfig.startTime.split(':').map(Number);
+                const startMinutes = startH * 60 + startM;
+
+                const [endH, endM] = timeConfig.endTime.split(':').map(Number);
+                const endMinutes = endH * 60 + endM;
+
+                if (currentMinutes < startMinutes) {
+                    showToast(`Presensi belum dibuka! Jam operasional dimulai pukul ${timeConfig.startTime} WIB.`, "warning");
+                    return;
+                }
+
+                if (currentMinutes > endMinutes) {
+                    showToast(`Presensi telah ditutup! Jam operasional berakhir pukul ${timeConfig.endTime} WIB.`, "error");
+                    return;
+                }
             }
 
             // Jika proteksi GPS diaktifkan oleh Sekolah
@@ -1049,6 +1125,21 @@
             document.getElementById('gpsLat').value = gpsConfig.lat || '';
             document.getElementById('gpsLng').value = gpsConfig.lng || '';
             document.getElementById('gpsRadius').value = gpsConfig.radius || 150;
+        }
+
+        function loadTimeSettingsUI() {
+            document.getElementById('timeEnableToggle').checked = timeConfig.enabled;
+            document.getElementById('timeStartInput').value = timeConfig.startTime || "06:30";
+            document.getElementById('timeEndInput').value = timeConfig.endTime || "14:00";
+        }
+
+        function saveTimeSettings() {
+            timeConfig.enabled = document.getElementById('timeEnableToggle').checked;
+            timeConfig.startTime = document.getElementById('timeStartInput').value || "06:30";
+            timeConfig.endTime = document.getElementById('timeEndInput').value || "14:00";
+
+            localStorage.setItem('MTS_TIME_CONFIG', JSON.stringify(timeConfig));
+            showToast(`Pengaturan Batas Waktu berhasil disimpan (${timeConfig.startTime} - ${timeConfig.endTime} WIB)!`, "success");
         }
 
         function saveGpsSettings() {
