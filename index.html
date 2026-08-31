@@ -281,6 +281,9 @@
                                 <option value="Terlambat">Terlambat</option>
                                 <option value="Alpha">Alpha (Belum Absen)</option>
                             </select>
+                            <button onclick="fetchOnlineLogsFromGas()" id="btnSyncGas" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2.5 px-3.5 rounded-xl shadow-sm flex items-center gap-1.5 transition">
+                                <i class="fa-solid fa-rotate"></i> Sync Data Spreadsheet
+                            </button>
                             <button onclick="exportToCSV()" class="bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold py-2.5 px-3.5 rounded-xl shadow-sm flex items-center gap-1.5 transition">
                                 <i class="fa-solid fa-file-excel"></i> Export Rekap Excel
                             </button>
@@ -547,7 +550,7 @@
         // =========================================================================
         const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbynsbpXRxFa3lT8fbJ30ltF7NoCqrtyqa6z46-tGVM9ytT3w9sa-BTrJ-gXseat6BVshA/exec"; 
 
-        // 🔑 GANTI PIN GURU DI SINI (Ubah "1234" dengan PIN rahasia Anda, misal: "5678"):
+        // 🔑 GANTI PIN GURU DI SINI (Ubah "1985" dengan PIN rahasia Anda):
         const ADMIN_PIN_DEFAULT = "1985"; 
 
         const DEFAULT_DATA_MURID = {
@@ -558,6 +561,7 @@
 
         let DATA_MURID = {};
         let localLogs = [];
+        let onlineLogs = [];
         let gasWebhookUrl = localStorage.getItem('MTS_GAS_URL') || DEFAULT_GAS_URL;
         let isAdminLoggedIn = false;
 
@@ -952,7 +956,7 @@
             if (viewName === 'admin') {
                 document.getElementById('viewStudent').classList.add('hidden');
                 document.getElementById('viewAdmin').classList.remove('hidden');
-                renderAdminTable();
+                fetchOnlineLogsFromGas();
             } else {
                 document.getElementById('viewAdmin').classList.add('hidden');
                 document.getElementById('viewStudent').classList.remove('hidden');
@@ -991,23 +995,79 @@
             }
         }
 
-        function getFullRosterWithStatus() {
-            const todayStr = new Date().toLocaleDateString('id-ID');
-            let fullList = [];
+        async function fetchOnlineLogsFromGas() {
+            const targetUrl = gasWebhookUrl || DEFAULT_GAS_URL;
+            if (!targetUrl || !targetUrl.startsWith('http')) return;
 
+            const btnSync = document.getElementById('btnSyncGas');
+            if (btnSync) {
+                btnSync.disabled = true;
+                btnSync.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Memuat Data...';
+            }
+
+            try {
+                const response = await fetch(targetUrl);
+                const data = await response.json();
+                if (Array.isArray(data)) {
+                    onlineLogs = data;
+                    showToast(`Berhasil sinkronisasi ${data.length} data dari Spreadsheet!`, "success");
+                }
+            } catch (err) {
+                console.error("Gagal sinkronisasi dari Spreadsheet:", err);
+                showToast("Gagal mengambil data Spreadsheet. Menampilkan data lokal.", "warning");
+            } finally {
+                if (btnSync) {
+                    btnSync.disabled = false;
+                    btnSync.innerHTML = '<i class="fa-solid fa-rotate"></i> Sync Data Spreadsheet';
+                }
+                renderAdminTable();
+            }
+        }
+
+        function getFullRosterWithStatus() {
+            const today = new Date();
+            const todayStr = today.toLocaleDateString('id-ID');
+            const todayParts = todayStr.split('/').map(p => p.trim());
+            
+            const isToday = (dateVal) => {
+                if (!dateVal) return false;
+                const dStr = String(dateVal);
+                const parts = dStr.split('/').map(p => p.trim());
+                if (parts.length === 3 && todayParts.length === 3) {
+                    return parseInt(parts[0]) === parseInt(todayParts[0]) &&
+                           parseInt(parts[1]) === parseInt(todayParts[1]) &&
+                           parseInt(parts[2]) === parseInt(todayParts[2]);
+                }
+                return dStr.includes(todayStr) || todayStr.includes(dStr);
+            };
+
+            let fullList = [];
             const loggedMap = new Map();
-            localLogs.forEach(item => {
-                if (item.tanggal === todayStr) {
-                    const key = `${item.kelas}_${item.nama}`;
+
+            // Gabungkan log online dari Google Sheets & log lokal HP
+            const combinedLogs = [...onlineLogs, ...localLogs];
+
+            combinedLogs.forEach(item => {
+                if (isToday(item.tanggal)) {
+                    const key = `${String(item.kelas).trim().toUpperCase()}_${String(item.nama).trim().toLowerCase()}`;
                     if (!loggedMap.has(key)) {
-                        loggedMap.set(key, item);
+                        loggedMap.set(key, {
+                            timestamp: item.timestamp || new Date().toISOString(),
+                            tanggal: item.tanggal || todayStr,
+                            waktu: item.waktu || '-',
+                            kelas: String(item.kelas).trim(),
+                            nama: String(item.nama).trim(),
+                            status: item.status || 'Hadir',
+                            keterangan: item.keterangan || '-',
+                            destination: item.destination || 'Spreadsheet'
+                        });
                     }
                 }
             });
 
             Object.keys(DATA_MURID).forEach(kelas => {
                 DATA_MURID[kelas].forEach(nama => {
-                    const key = `${kelas}_${nama}`;
+                    const key = `${String(kelas).trim().toUpperCase()}_${String(nama).trim().toLowerCase()}`;
                     if (loggedMap.has(key)) {
                         fullList.push(loggedMap.get(key));
                     } else {
