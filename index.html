@@ -997,7 +997,10 @@
 
         async function fetchOnlineLogsFromGas() {
             const targetUrl = gasWebhookUrl || DEFAULT_GAS_URL;
-            if (!targetUrl || !targetUrl.startsWith('http')) return;
+            if (!targetUrl || !targetUrl.startsWith('http')) {
+                showToast("URL Webhook belum diisi di Pengaturan!", "warning");
+                return;
+            }
 
             const btnSync = document.getElementById('btnSyncGas');
             if (btnSync) {
@@ -1007,15 +1010,28 @@
 
             try {
                 const response = await fetch(targetUrl, { method: 'GET', redirect: 'follow' });
-                if (!response.ok) throw new Error("HTTP error " + response.status);
-                const data = await response.json();
+                if (!response.ok) throw new Error("Status HTTP " + response.status);
+                
+                const rawText = await response.text();
+                let data;
+                try {
+                    data = JSON.parse(rawText);
+                } catch(jsonErr) {
+                    console.error("Respon Apps Script bukan JSON:", rawText);
+                    throw new Error("Apps Script belum di-Deploy ke Versi Baru (Merespon Teks, bukan JSON)");
+                }
+
                 if (Array.isArray(data)) {
                     onlineLogs = data;
                     showToast(`Berhasil sinkronisasi ${data.length} data dari Spreadsheet!`, "success");
+                } else if (data && data.error) {
+                    throw new Error("GAS Error: " + data.error);
+                } else {
+                    throw new Error("Format data tidak sesuai.");
                 }
             } catch (err) {
                 console.error("Gagal sinkronisasi dari Spreadsheet:", err);
-                showToast("Gagal mengambil data Spreadsheet. Menampilkan data lokal.", "warning");
+                showToast("Gagal Sync: " + err.message, "error");
             } finally {
                 if (btnSync) {
                     btnSync.disabled = false;
