@@ -304,6 +304,7 @@
                                     <th class="p-3">Status</th>
                                     <th class="p-3">Catatan / Keterangan</th>
                                     <th class="p-3">Penyimpanan</th>
+                                    <th class="p-3 text-center">Laporan WA Ortu</th>
                                 </tr>
                             </thead>
                             <tbody id="tableBodyAbsensi" class="divide-y divide-slate-100 font-medium">
@@ -838,7 +839,6 @@
             }
         }
 
-        // Helper: Calculate Haversine Distance in meters
         function calculateDistance(lat1, lon1, lat2, lon2) {
             const R = 6371e3; // Earth radius in meters
             const φ1 = lat1 * Math.PI/180;
@@ -1006,7 +1006,8 @@
             }
 
             try {
-                const response = await fetch(targetUrl);
+                const response = await fetch(targetUrl, { method: 'GET', redirect: 'follow' });
+                if (!response.ok) throw new Error("HTTP error " + response.status);
                 const data = await response.json();
                 if (Array.isArray(data)) {
                     onlineLogs = data;
@@ -1120,7 +1121,7 @@
             }
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400 font-medium">Tidak ada data presensi yang sesuai dengan filter.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400 font-medium">Tidak ada data presensi yang sesuai dengan filter.</td></tr>`;
                 return;
             }
 
@@ -1130,6 +1131,9 @@
                 if (row.status === 'Izin') badgeClass = "bg-blue-100 text-blue-800 border border-blue-200";
                 if (row.status === 'Terlambat') badgeClass = "bg-purple-100 text-purple-800 border border-purple-200";
                 if (row.status === 'Alpha') badgeClass = "bg-rose-100 text-rose-800 border border-rose-200 font-bold";
+
+                const safeNama = (row.nama || '').replace(/'/g, "\\'");
+                const safeKet = (row.keterangan || '').replace(/'/g, "\\'");
 
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
@@ -1141,9 +1145,59 @@
                     <td class="p-3"><span class="px-2.5 py-1 rounded-full text-xs ${badgeClass}">${row.status}</span></td>
                     <td class="p-3 text-slate-500 text-xs">${row.keterangan}</td>
                     <td class="p-3 text-slate-400 text-xs font-mono">${row.destination || '-'}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="kirimWaOrtu('${safeNama}', '${row.kelas}', '${row.status}', '${safeKet}', '${row.waktu}')" class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold py-1.5 px-3 rounded-xl text-xs inline-flex items-center gap-1.5 shadow-sm transition">
+                            <i class="fa-brands fa-whatsapp text-sm text-emerald-200"></i> Kirim WA
+                        </button>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
+        }
+
+        function kirimWaOrtu(nama, kelas, status, keterangan, waktu) {
+            const dateStr = document.getElementById('studentDateStr').textContent || new Date().toLocaleDateString('id-ID');
+            
+            let statusLabel = status;
+            if (status === 'Alpha') statusLabel = 'ALPHA (Belum/Tidak Melakukan Presensi)';
+            else if (status === 'Hadir') statusLabel = 'HADIR (Pukul ' + waktu + ')';
+            else if (status === 'Terlambat') statusLabel = 'TERLAMBAT (Pukul ' + waktu + ')';
+            else if (status === 'Sakit') statusLabel = 'SAKIT';
+            else if (status === 'Izin') statusLabel = 'IZIN';
+
+            const pesannya = `Assalamu'alaikum Wr. Wb.
+
+Yth. Bapak/Ibu Orang Tua/Wali dari:
+Nama: *${nama}*
+Kelas: *${kelas}*
+
+Menginformasikan bahwa pada hari ini (*${dateStr}*), ananda tercatat dengan status presensi:
+👉 *${statusLabel}*
+Catatan: _${keterangan || '-'}_
+
+Demikian informasi ini kami sampaikan dari pihak sekolah MTs Mambaul Ulum. Terima kasih atas perhatian dan kerja samanya.
+
+Wassalamu'alaikum Wr. Wb.
+*_Pengelola Presensi MTs Mambaul Ulum_*`;
+
+            const inputNo = prompt(`Kirim laporan presensi ${nama} (Kelas ${kelas}) via WhatsApp:\n\nMasukkan nomor WA Orang Tua (contoh: 081234567890 atau 6281234567890):\n*Kosongkan dan tekan OK jika ingin memilih kontak manual di aplikasi WhatsApp.`, "");
+
+            if (inputNo === null) return;
+
+            const encodedText = encodeURIComponent(pesannya);
+            let waUrl = "";
+
+            if (inputNo.trim() !== "") {
+                let cleanNo = inputNo.trim().replace(/[^0-9]/g, '');
+                if (cleanNo.startsWith('0')) {
+                    cleanNo = '62' + cleanNo.substring(1);
+                }
+                waUrl = `https://api.whatsapp.com/send?phone=${cleanNo}&text=${encodedText}`;
+            } else {
+                waUrl = `https://api.whatsapp.com/send?text=${encodedText}`;
+            }
+
+            window.open(waUrl, '_blank');
         }
 
         function generatePosterQR() {
