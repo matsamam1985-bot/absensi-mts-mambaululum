@@ -40,7 +40,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen text-slate-800 flex flex-col justify-between">
+<body class="min-h-screen text-slate-800 flex flex-col justify-between select-none">
 
     <!-- Header Web -->
     <header class="gradient-bg text-white shadow-md sticky top-0 z-40">
@@ -56,7 +56,7 @@
             </div>
 
             <!-- Lock / Switch to Admin Panel Button -->
-            <button onclick="promptAdminPin()" class="bg-black/20 hover:bg-black/30 backdrop-blur-md text-emerald-100 hover:text-white px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition border border-white/10">
+            <button type="button" onclick="promptAdminPin()" class="bg-black/20 hover:bg-black/30 backdrop-blur-md text-emerald-100 hover:text-white px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition border border-white/10 cursor-pointer">
                 <i class="fa-solid fa-user-shield text-amber-300"></i>
                 <span id="navRoleLabel" class="hidden sm:inline">Portal Guru</span>
             </button>
@@ -102,7 +102,7 @@
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
                             1. Pilih Kelas <span class="text-rose-500">*</span>
                         </label>
-                        <select id="studentSelectKelas" onchange="onStudentKelasChange()" required class="w-full bg-slate-50 border border-slate-300 text-slate-900 text-base sm:text-lg rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 block p-3.5 font-semibold transition shadow-sm">
+                        <select id="studentSelectKelas" onchange="onStudentKelasChange()" required class="w-full bg-slate-50 border border-slate-300 text-slate-900 text-base sm:text-lg rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 block p-3.5 font-semibold transition shadow-sm cursor-pointer">
                             <option value="" disabled selected>-- Pilih Kelas Anda --</option>
                         </select>
                     </div>
@@ -112,7 +112,7 @@
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
                             2. Pilih Nama Siswa <span class="text-rose-500">*</span>
                         </label>
-                        <select id="studentSelectNama" required disabled class="w-full bg-slate-50 border border-slate-300 text-slate-900 text-base sm:text-lg rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 block p-3.5 font-semibold transition shadow-sm disabled:bg-slate-100 disabled:text-slate-400">
+                        <select id="studentSelectNama" required disabled class="w-full bg-slate-50 border border-slate-300 text-slate-900 text-base sm:text-lg rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 block p-3.5 font-semibold transition shadow-sm disabled:bg-slate-100 disabled:text-slate-400 cursor-pointer">
                             <option value="" disabled selected>-- Silakan Pilih Kelas Terlebih Dahulu --</option>
                         </select>
                     </div>
@@ -152,7 +152,7 @@
 
                     <!-- Submit Button -->
                     <div class="pt-3">
-                        <button type="submit" id="btnStudentSubmit" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 active:scale-[0.99] text-white font-extrabold py-4 px-6 rounded-2xl shadow-lg hover:shadow-emerald-600/30 transition text-base sm:text-lg flex items-center justify-center gap-3">
+                        <button type="submit" id="btnStudentSubmit" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 active:scale-[0.99] text-white font-extrabold py-4 px-6 rounded-2xl shadow-lg hover:shadow-emerald-600/30 transition text-base sm:text-lg flex items-center justify-center gap-3 cursor-pointer">
                             <i class="fa-solid fa-paper-plane text-xl"></i> KIRIM PRESENSI SEKARANG
                         </button>
                     </div>
@@ -160,8 +160,8 @@
             </div>
 
             <!-- Modal Result Success -->
-            <div id="modalSuccess" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-                <div class="glass-card max-w-sm w-full rounded-3xl p-6 text-center shadow-2xl border border-emerald-300 animate-bounce-short">
+            <div id="modalSuccess" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden pointer-events-none">
+                <div class="glass-card max-w-sm w-full rounded-3xl p-6 text-center shadow-2xl border border-emerald-300 pointer-events-auto">
                     <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl mb-4">
                         <i class="fa-solid fa-circle-check"></i>
                     </div>
@@ -187,7 +187,7 @@
                         </div>
                     </div>
 
-                    <button onclick="closeSuccessModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm shadow transition">
+                    <button type="button" onclick="closeSuccessModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm shadow transition cursor-pointer">
                         Selesai & Kembali
                     </button>
                 </div>
@@ -209,29 +209,29 @@
                     <h2 class="font-extrabold text-lg sm:text-xl text-white mt-1">Dashboard Rekapitulasi Presensi</h2>
                     <p class="text-xs text-slate-400">Kelola master siswa, spreadsheet, cetak QR poster kelas, dan kunci lokasi GPS.</p>
                 </div>
-                <button onclick="logoutAdmin()" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-xs font-bold px-3.5 py-2 rounded-xl transition flex items-center gap-1.5">
+                <button type="button" onclick="logoutAdmin()" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-xs font-bold px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 cursor-pointer">
                     <i class="fa-solid fa-right-from-bracket"></i> Keluar Portal
                 </button>
             </div>
 
             <!-- Navigation Tabs inside Admin -->
             <div class="flex border-b border-slate-200 space-x-2 overflow-x-auto custom-scrollbar pb-1 text-xs sm:text-sm">
-                <button onclick="switchAdminTab('rekap')" id="tabAdmin-rekap" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 border-b-2 border-emerald-600 text-emerald-700 bg-emerald-50">
+                <button type="button" onclick="switchAdminTab('rekap')" id="tabAdmin-rekap" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 border-b-2 border-emerald-600 text-emerald-700 bg-emerald-50 cursor-pointer">
                     <i class="fa-solid fa-clipboard-list"></i> Rekap Presensi
                 </button>
-                <button onclick="switchAdminTab('siswa')" id="tabAdmin-siswa" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 text-slate-500 hover:text-emerald-600">
+                <button type="button" onclick="switchAdminTab('siswa')" id="tabAdmin-siswa" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 text-slate-500 hover:text-emerald-600 cursor-pointer">
                     <i class="fa-solid fa-users-gear"></i> Kelola Data Siswa
                 </button>
-                <button onclick="switchAdminTab('poster')" id="tabAdmin-poster" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 text-slate-500 hover:text-emerald-600">
+                <button type="button" onclick="switchAdminTab('poster')" id="tabAdmin-poster" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 text-slate-500 hover:text-emerald-600 cursor-pointer">
                     <i class="fa-solid fa-qrcode"></i> Cetak QR Poster
                 </button>
-                <button onclick="switchAdminTab('sheet')" id="tabAdmin-sheet" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 text-slate-500 hover:text-emerald-600">
+                <button type="button" onclick="switchAdminTab('sheet')" id="tabAdmin-sheet" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 text-slate-500 hover:text-emerald-600 cursor-pointer">
                     <i class="fa-solid fa-file-spreadsheet"></i> Pengaturan Spreadsheet
                 </button>
-                <button onclick="switchAdminTab('gps')" id="tabAdmin-gps" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 text-slate-500 hover:text-emerald-600">
+                <button type="button" onclick="switchAdminTab('gps')" id="tabAdmin-gps" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 text-slate-500 hover:text-emerald-600 cursor-pointer">
                     <i class="fa-solid fa-location-dot"></i> Kunci GPS Sekolah
                 </button>
-                <button onclick="switchAdminTab('waktu')" id="tabAdmin-waktu" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 text-slate-500 hover:text-emerald-600">
+                <button type="button" onclick="switchAdminTab('waktu')" id="tabAdmin-waktu" class="admin-tab-btn px-4 py-2.5 font-bold rounded-t-lg transition flex items-center gap-2 text-slate-500 hover:text-emerald-600 cursor-pointer">
                     <i class="fa-solid fa-business-time"></i> Batas Jam Operasional
                 </button>
             </div>
@@ -267,13 +267,18 @@
                     <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-4 pb-3 border-b border-slate-100">
                         <div>
                             <h3 class="font-bold text-slate-800 text-base">Rekapitulasi Kehadiran Kelas</h3>
-                            <p class="text-xs text-slate-500">Daftar presensi siswa hari ini terintegrasi dengan Master Data Siswa</p>
+                            <p class="text-xs text-slate-500">Daftar presensi siswa terintegrasi dengan Master Data Siswa</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-2">
-                            <select id="filterKelasTable" onchange="renderAdminTable()" class="bg-slate-50 border border-slate-300 text-slate-700 text-xs font-semibold rounded-xl p-2.5">
+                            <!-- Filter Tanggal Presensi -->
+                            <div class="flex items-center bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-1.5 gap-1.5">
+                                <i class="fa-solid fa-calendar-day text-emerald-600 text-xs"></i>
+                                <input type="date" id="filterTanggalTable" onchange="renderAdminTable()" class="bg-transparent text-slate-700 text-xs font-bold focus:outline-none cursor-pointer">
+                            </div>
+                            <select id="filterKelasTable" onchange="renderAdminTable()" class="bg-slate-50 border border-slate-300 text-slate-700 text-xs font-semibold rounded-xl p-2.5 cursor-pointer">
                                 <option value="ALL">Semua Kelas</option>
                             </select>
-                            <select id="filterStatusTable" onchange="renderAdminTable()" class="bg-slate-50 border border-slate-300 text-slate-700 text-xs font-semibold rounded-xl p-2.5">
+                            <select id="filterStatusTable" onchange="renderAdminTable()" class="bg-slate-50 border border-slate-300 text-slate-700 text-xs font-semibold rounded-xl p-2.5 cursor-pointer">
                                 <option value="ALL">Semua Status</option>
                                 <option value="Hadir">Hadir</option>
                                 <option value="Sakit">Sakit</option>
@@ -281,13 +286,13 @@
                                 <option value="Terlambat">Terlambat</option>
                                 <option value="Alpha">Alpha (Belum Absen)</option>
                             </select>
-                            <button onclick="fetchOnlineLogsFromGas()" id="btnSyncGas" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2.5 px-3.5 rounded-xl shadow-sm flex items-center gap-1.5 transition">
+                            <button type="button" onclick="fetchOnlineLogsFromGas()" id="btnSyncGas" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2.5 px-3.5 rounded-xl shadow-sm flex items-center gap-1.5 transition cursor-pointer">
                                 <i class="fa-solid fa-rotate"></i> Sync Data Spreadsheet
                             </button>
-                            <button onclick="exportToCSV()" class="bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold py-2.5 px-3.5 rounded-xl shadow-sm flex items-center gap-1.5 transition">
+                            <button type="button" onclick="exportToCSV()" class="bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold py-2.5 px-3.5 rounded-xl shadow-sm flex items-center gap-1.5 transition cursor-pointer">
                                 <i class="fa-solid fa-file-excel"></i> Export Rekap Excel
                             </button>
-                            <button onclick="clearLocalLogsPrompt()" class="bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs font-bold py-2.5 px-3 rounded-xl border border-slate-200 transition">
+                            <button type="button" onclick="clearLocalLogsPrompt()" class="bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs font-bold py-2.5 px-3 rounded-xl border border-slate-200 transition cursor-pointer">
                                 <i class="fa-solid fa-trash-can"></i> Reset Log
                             </button>
                         </div>
@@ -325,7 +330,7 @@
                             </h3>
                             <p class="text-xs text-slate-500">Tambah kelas baru atau salin-tempel daftar nama siswa dari Excel/Word ke tiap kelas.</p>
                         </div>
-                        <button onclick="resetDataMuridToDefault()" class="bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 font-bold text-xs px-3 py-2 rounded-xl border border-slate-200 transition">
+                        <button type="button" onclick="resetDataMuridToDefault()" class="bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 font-bold text-xs px-3 py-2 rounded-xl border border-slate-200 transition cursor-pointer">
                             <i class="fa-solid fa-rotate-left mr-1"></i> Reset ke Data Bawaan
                         </button>
                     </div>
@@ -337,7 +342,7 @@
                             <input type="text" id="inputTambahKelas" placeholder="Contoh: 7C atau 10-IPA" class="w-full bg-white border border-emerald-300 rounded-xl p-2.5 text-sm font-bold text-slate-800 uppercase focus:ring-2 focus:ring-emerald-500">
                         </div>
                         <div class="w-full sm:w-auto pt-3 sm:pt-4">
-                            <button onclick="tambahKelasBaru()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-3 px-5 rounded-xl shadow transition flex items-center justify-center gap-1.5">
+                            <button type="button" onclick="tambahKelasBaru()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-3 px-5 rounded-xl shadow transition flex items-center justify-center gap-1.5 cursor-pointer">
                                 <i class="fa-solid fa-plus"></i> Tambah Kelas
                             </button>
                         </div>
@@ -349,7 +354,7 @@
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 sm:col-span-1">
                                 Pilih Kelas Yang Ingin Diisi/Edit:
                             </label>
-                            <select id="adminSelectKelasEdit" onchange="loadStudentTextareaForSelectedClass()" class="sm:col-span-2 bg-slate-50 border border-slate-300 text-slate-900 text-sm font-bold rounded-xl p-3 focus:ring-2 focus:ring-emerald-500">
+                            <select id="adminSelectKelasEdit" onchange="loadStudentTextareaForSelectedClass()" class="sm:col-span-2 bg-slate-50 border border-slate-300 text-slate-900 text-sm font-bold rounded-xl p-3 focus:ring-2 focus:ring-emerald-500 cursor-pointer">
                                 <!-- JS Populated -->
                             </select>
                         </div>
@@ -365,10 +370,10 @@
                         </div>
 
                         <div class="flex flex-col sm:flex-row justify-between items-center gap-3 pt-2">
-                            <button onclick="hapusKelasTerpilih()" class="w-full sm:w-auto bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold text-xs py-3 px-4 rounded-xl border border-rose-200 transition flex items-center justify-center gap-1.5">
+                            <button type="button" onclick="hapusKelasTerpilih()" class="w-full sm:w-auto bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold text-xs py-3 px-4 rounded-xl border border-rose-200 transition flex items-center justify-center gap-1.5 cursor-pointer">
                                 <i class="fa-solid fa-trash"></i> Hapus Kelas Ini
                             </button>
-                            <button onclick="simpanSiswaKelasTerpilih()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm py-3 px-6 rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                            <button type="button" onclick="simpanSiswaKelasTerpilih()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm py-3 px-6 rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
                                 <i class="fa-solid fa-floppy-disk"></i> Simpan Daftar Siswa Kelas Ini
                             </button>
                         </div>
@@ -395,7 +400,7 @@
                     </div>
 
                     <div class="mt-6 flex justify-center gap-3">
-                        <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-xl shadow-md text-sm flex items-center gap-2">
+                        <button type="button" onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-xl shadow-md text-sm flex items-center gap-2 cursor-pointer">
                             <i class="fa-solid fa-print"></i> Cetak Poster Absensi
                         </button>
                     </div>
@@ -416,7 +421,7 @@
                             <input type="url" id="inputGasUrl" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-xs sm:text-sm rounded-xl p-3 font-mono focus:ring-2 focus:ring-emerald-500">
                         </div>
 
-                        <button onclick="saveGasUrl()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-5 rounded-xl shadow transition flex items-center gap-1.5">
+                        <button type="button" onclick="saveGasUrl()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-5 rounded-xl shadow transition flex items-center gap-1.5 cursor-pointer">
                             <i class="fa-solid fa-floppy-disk"></i> Simpan Webhook URL
                         </button>
                     </div>
@@ -459,10 +464,10 @@
                         </div>
 
                         <div class="flex flex-wrap gap-2 pt-2">
-                            <button onclick="getCurrentDeviceLocation()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center gap-1.5 shadow transition">
+                            <button type="button" onclick="getCurrentDeviceLocation()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center gap-1.5 shadow transition cursor-pointer">
                                 <i class="fa-solid fa-crosshairs"></i> Deteksi Lokasi HP Saya Sekarang
                             </button>
-                            <button onclick="saveGpsSettings()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs flex items-center gap-1.5 shadow transition">
+                            <button type="button" onclick="saveGpsSettings()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs flex items-center gap-1.5 shadow transition cursor-pointer">
                                 <i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan GPS
                             </button>
                         </div>
@@ -502,7 +507,7 @@
                         </div>
 
                         <div class="pt-2">
-                            <button onclick="saveTimeSettings()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs flex items-center gap-1.5 shadow transition">
+                            <button type="button" onclick="saveTimeSettings()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs flex items-center gap-1.5 shadow transition cursor-pointer">
                                 <i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan Jam
                             </button>
                         </div>
@@ -515,8 +520,8 @@
     </main>
 
     <!-- Modal Input PIN Guru/Admin -->
-    <div id="modalPin" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-card max-w-xs w-full rounded-2xl p-5 text-center shadow-2xl border border-slate-200">
+    <div id="modalPin" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden pointer-events-none">
+        <div class="glass-card max-w-xs w-full rounded-2xl p-5 text-center shadow-2xl border border-slate-200 pointer-events-auto">
             <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto text-xl mb-3">
                 <i class="fa-solid fa-lock"></i>
             </div>
@@ -526,15 +531,15 @@
             <form onsubmit="verifyAdminPin(event)">
                 <input type="password" id="inputAdminPin" maxlength="6" autofocus placeholder="Masukkan PIN" class="w-full text-center text-xl font-mono tracking-widest bg-slate-100 border border-slate-300 rounded-xl p-2.5 mb-4 focus:ring-2 focus:ring-emerald-500">
                 <div class="flex gap-2">
-                    <button type="button" onclick="closePinModal()" class="flex-1 bg-slate-100 text-slate-600 font-bold py-2 rounded-xl text-xs">Batal</button>
-                    <button type="submit" class="flex-1 bg-emerald-600 text-white font-bold py-2 rounded-xl text-xs shadow">Masuk</button>
+                    <button type="button" onclick="closePinModal()" class="flex-1 bg-slate-100 text-slate-600 font-bold py-2 rounded-xl text-xs cursor-pointer">Batal</button>
+                    <button type="submit" class="flex-1 bg-emerald-600 text-white font-bold py-2 rounded-xl text-xs shadow cursor-pointer">Masuk</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Toast Banner Container -->
-    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 max-w-sm bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-slate-700">
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 max-w-sm bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-slate-700 pointer-events-none">
         <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-xl"></i>
         <div class="flex-1 text-xs font-medium" id="toastMessage">Notifikasi</div>
     </div>
@@ -546,136 +551,211 @@
 
     <script>
         // =========================================================================
-        // ⚠️ ISIKAN URL SPREADSHEET (APPS SCRIPT) ANDA DI DALAM TANDA PETIK DI BAWAH:
-        // Contoh: "https://script.google.com/macros/s/AKfycb.../exec"
+        // ⚠️ KONFIGURASI SPREADSHEET WEBHOOK & PIN GURU
         // =========================================================================
-        const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbzNIX9cAfJPECWzUH52ArO-YRsiFWTXFjh8t1NiG64yrHBINmexyNwcimE3GK0sD5bb/exec"; 
-
-        // 🔑 GANTI PIN GURU DI SINI (Ubah "1985" dengan PIN rahasia Anda):
+        const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbztfBbyDdAKtAHX-y0mWYckDS7H0Qi8aTWPv5xoHIDiWbIizoyED-XJZ7sMg1I2mAH92A/exec"; 
         const ADMIN_PIN_DEFAULT = "1985"; 
 
         const DEFAULT_DATA_MURID = {
             "7": ["Abdullah Yusuf El Azam Al Fatah", "Ahmad Albert Ridlwan", "Ahmad Khoirul Azam", "Ainnur Qo`idah", "Anjani Robbaniyyah", "Eka Najwa Aulia", "Reny Mu`Tamaroh", "Sharma Aqilla Azzahra"],
             "8": ["Achmad Haikal", "Adinda Nur Humairo`", "Alesha Madihatu Zahro", "Brilliant Halim Ridhwan", "Elok Nur Kamilah", "Frista Cantika Putri Kayla", "Jalaluddin Ar Rumi", "Maslihatul Umuriyah", "Muhammad Alif Ikhwan", "Muhammad Davin Belva Kumara", "Muhammad Feri Setiawan", "Muhammad Rizky Eka Saputra", "Nabila Alvira Khairunnisa`", "Naila Alfin Ni`mah", "Qonita Najwa"],
-            "9": ["Muhammad Uzair", "Ahmad Syauqi", "Isyna Finurika", "M. Ilham Robby Syadewa Putra", "Muh Lucky Fathu Niam", "Salsabila Ulyah Ramadhani"],
+            "9": ["Muhammad Uzair", "Ahmad Syauqi", "Isyna Finurika", "M. Ilham Robby Syadewa Putra", "Muh Lucky Fathu Niam", "Salsabila Ulyah Ramadhani"]
         };
 
+        // Storage Fail-Safe Fallback
+        const memoryStore = {};
+        function safeGetStorage(key) {
+            try {
+                if (window.localStorage) {
+                    return window.localStorage.getItem(key);
+                }
+            } catch(e) {}
+            return memoryStore[key] || null;
+        }
+        function safeSetStorage(key, val) {
+            try {
+                if (window.localStorage) {
+                    window.localStorage.setItem(key, val);
+                    return;
+                }
+            } catch(e) {}
+            memoryStore[key] = val;
+        }
+        function safeParseJSON(jsonStr, fallback) {
+            if (!jsonStr) return fallback;
+            try { return JSON.parse(jsonStr); } catch(e) { return fallback; }
+        }
+
+        // Global State
         let DATA_MURID = {};
         let localLogs = [];
         let onlineLogs = [];
-        let gasWebhookUrl = localStorage.getItem('MTS_GAS_URL') || DEFAULT_GAS_URL;
+        let gasWebhookUrl = safeGetStorage('MTS_GAS_URL') || DEFAULT_GAS_URL;
         let isAdminLoggedIn = false;
 
-        // Configuration for GPS Geofencing
-        let gpsConfig = JSON.parse(localStorage.getItem('MTS_GPS_CONFIG')) || {
+        let gpsConfig = safeParseJSON(safeGetStorage('MTS_GPS_CONFIG'), {
             enabled: false,
             lat: 0,
             lng: 0,
-            radius: 150 // Meters
-        };
+            radius: 150
+        });
 
-        // Configuration for Time Restriction
-        let timeConfig = JSON.parse(localStorage.getItem('MTS_TIME_CONFIG')) || {
+        let timeConfig = safeParseJSON(safeGetStorage('MTS_TIME_CONFIG'), {
             enabled: true,
             startTime: "06:30",
             endTime: "14:00"
-        };
-
-        window.addEventListener('DOMContentLoaded', () => {
-            loadMasterDataMurid();
-            updateClock();
-            setInterval(updateClock, 1000);
-            updateDateDisplay();
-            loadLogsFromLocalStorage();
-            loadSavedGasUrl();
-            generatePosterQR();
-            populateKelasDropdowns();
-            loadGpsSettingsUI();
-            loadTimeSettingsUI();
         });
 
+        function runSafely(fn) {
+            try { fn(); } catch(err) { console.warn("Init module warning:", err); }
+        }
+
+        // Custom Standalone Indonesian Date & Clock Formatters (Zero Dependency)
+        function formatIndonesianDate(d) {
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            try {
+                const dayName = days[d.getDay()];
+                const dayNum = d.getDate();
+                const monthName = months[d.getMonth()];
+                const year = d.getFullYear();
+                return `${dayName}, ${dayNum} ${monthName} ${year}`;
+            } catch(e) {
+                return d.toDateString();
+            }
+        }
+
+        function formatIndonesianTime(d) {
+            try {
+                const h = String(d.getHours()).padStart(2, '0');
+                const m = String(d.getMinutes()).padStart(2, '0');
+                const s = String(d.getSeconds()).padStart(2, '0');
+                return `${h}:${m}:${s} WIB`;
+            } catch(e) {
+                return "00:00:00 WIB";
+            }
+        }
+
+        function updateClock() {
+            const clockEl = document.getElementById('studentLiveClock');
+            if (clockEl) {
+                clockEl.textContent = formatIndonesianTime(new Date());
+            }
+        }
+
+        function updateDateDisplay() {
+            const dateEl = document.getElementById('studentDateStr');
+            if (dateEl) {
+                dateEl.textContent = formatIndonesianDate(new Date());
+            }
+        }
+
+        function setDefaultFilterTanggal() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const dateInput = document.getElementById('filterTanggalTable');
+            if (dateInput && !dateInput.value) {
+                dateInput.value = `${yyyy}-${mm}-${dd}`;
+            }
+        }
+
         function loadMasterDataMurid() {
-            const saved = localStorage.getItem('MTS_DATA_MURID_MASTER');
-            if (saved) {
-                try {
-                    DATA_MURID = JSON.parse(saved);
-                } catch(e) {
-                    DATA_MURID = JSON.parse(JSON.stringify(DEFAULT_DATA_MURID));
-                }
+            let loaded = null;
+            try {
+                const saved = safeGetStorage('MTS_DATA_MURID_MASTER');
+                if (saved) loaded = JSON.parse(saved);
+            } catch(e) {}
+
+            if (loaded && typeof loaded === 'object' && !Array.isArray(loaded) && Object.keys(loaded).length > 0) {
+                DATA_MURID = loaded;
             } else {
                 DATA_MURID = JSON.parse(JSON.stringify(DEFAULT_DATA_MURID));
+                safeSetStorage('MTS_DATA_MURID_MASTER', JSON.stringify(DATA_MURID));
             }
         }
 
         function saveMasterDataMurid() {
-            localStorage.setItem('MTS_DATA_MURID_MASTER', JSON.stringify(DATA_MURID));
+            safeSetStorage('MTS_DATA_MURID_MASTER', JSON.stringify(DATA_MURID));
             populateKelasDropdowns();
         }
 
         function populateKelasDropdowns() {
             const studentSelect = document.getElementById('studentSelectKelas');
+            const filterSelect = document.getElementById('filterKelasTable');
+            const editSelect = document.getElementById('adminSelectKelasEdit');
+
+            if (!studentSelect) return;
+
             const currentStudentVal = studentSelect.value;
             studentSelect.innerHTML = '<option value="" disabled selected>-- Pilih Kelas Anda --</option>';
 
-            const filterSelect = document.getElementById('filterKelasTable');
-            const currentFilterVal = filterSelect.value;
-            filterSelect.innerHTML = '<option value="ALL">Semua Kelas</option>';
+            if (filterSelect) {
+                filterSelect.innerHTML = '<option value="ALL">Semua Kelas</option>';
+            }
 
-            const editSelect = document.getElementById('adminSelectKelasEdit');
-            const currentEditVal = editSelect.value;
-            editSelect.innerHTML = '';
+            if (editSelect) {
+                editSelect.innerHTML = '';
+            }
 
-            const kelasList = Object.keys(DATA_MURID).sort();
+            const kelasList = Object.keys(DATA_MURID || {}).sort();
             kelasList.forEach(kelas => {
                 const opt1 = document.createElement('option');
                 opt1.value = kelas;
                 opt1.textContent = 'Kelas ' + kelas;
                 studentSelect.appendChild(opt1);
 
-                const opt2 = document.createElement('option');
-                opt2.value = kelas;
-                opt2.textContent = 'Kelas ' + kelas;
-                filterSelect.appendChild(opt2);
+                if (filterSelect) {
+                    const opt2 = document.createElement('option');
+                    opt2.value = kelas;
+                    opt2.textContent = 'Kelas ' + kelas;
+                    filterSelect.appendChild(opt2);
+                }
 
-                const opt3 = document.createElement('option');
-                opt3.value = kelas;
-                opt3.textContent = 'Kelas ' + kelas;
-                editSelect.appendChild(opt3);
+                if (editSelect) {
+                    const opt3 = document.createElement('option');
+                    opt3.value = kelas;
+                    opt3.textContent = 'Kelas ' + kelas;
+                    editSelect.appendChild(opt3);
+                }
             });
 
             if (kelasList.includes(currentStudentVal)) studentSelect.value = currentStudentVal;
-            if (kelasList.includes(currentFilterVal)) filterSelect.value = currentFilterVal;
-            if (kelasList.includes(currentEditVal)) editSelect.value = currentEditVal;
-            else if (kelasList.length > 0) editSelect.value = kelasList[0];
+            if (editSelect && kelasList.length > 0) editSelect.value = kelasList[0];
 
             loadStudentTextareaForSelectedClass();
         }
 
         function loadStudentTextareaForSelectedClass() {
             const editSelect = document.getElementById('adminSelectKelasEdit');
-            const selectedKelas = editSelect.value;
             const textarea = document.getElementById('textareaDaftarSiswa');
             const counter = document.getElementById('countSiswaSelectedClass');
 
+            if (!editSelect || !textarea) return;
+
+            const selectedKelas = editSelect.value;
             if (selectedKelas && DATA_MURID[selectedKelas]) {
                 const list = DATA_MURID[selectedKelas];
                 textarea.value = list.join('\n');
-                counter.textContent = `${list.length} Siswa`;
+                if (counter) counter.textContent = `${list.length} Siswa`;
             } else {
                 textarea.value = '';
-                counter.textContent = '0 Siswa';
+                if (counter) counter.textContent = '0 Siswa';
             }
         }
 
         function simpanSiswaKelasTerpilih() {
             const editSelect = document.getElementById('adminSelectKelasEdit');
+            if (!editSelect) return;
             const selectedKelas = editSelect.value;
             if (!selectedKelas) {
                 showToast("Pilih kelas terlebih dahulu!", "warning");
                 return;
             }
 
-            const rawText = document.getElementById('textareaDaftarSiswa').value;
+            const textarea = document.getElementById('textareaDaftarSiswa');
+            const rawText = textarea ? textarea.value : '';
             const lines = rawText.split('\n')
                                  .map(s => s.trim())
                                  .filter(s => s.length > 0);
@@ -687,6 +767,7 @@
 
         function tambahKelasBaru() {
             const input = document.getElementById('inputTambahKelas');
+            if (!input) return;
             const namaKelas = input.value.trim().toUpperCase();
 
             if (!namaKelas) {
@@ -703,13 +784,15 @@
             saveMasterDataMurid();
             input.value = '';
 
-            document.getElementById('adminSelectKelasEdit').value = namaKelas;
+            const editSelect = document.getElementById('adminSelectKelasEdit');
+            if (editSelect) editSelect.value = namaKelas;
             loadStudentTextareaForSelectedClass();
             showToast(`Kelas ${namaKelas} berhasil ditambahkan! Silakan isi daftar siswanya.`, "success");
         }
 
         function hapusKelasTerpilih() {
             const editSelect = document.getElementById('adminSelectKelasEdit');
+            if (!editSelect) return;
             const selectedKelas = editSelect.value;
 
             if (!selectedKelas) return;
@@ -729,21 +812,12 @@
             }
         }
 
-        function updateClock() {
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB';
-            document.getElementById('studentLiveClock').textContent = timeStr;
-        }
-
-        function updateDateDisplay() {
-            const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('studentDateStr').textContent = now.toLocaleDateString('id-ID', options);
-        }
-
         function onStudentKelasChange() {
-            const kelas = document.getElementById('studentSelectKelas').value;
+            const selectKelas = document.getElementById('studentSelectKelas');
             const namaSelect = document.getElementById('studentSelectNama');
+
+            if (!selectKelas || !namaSelect) return;
+            const kelas = selectKelas.value;
 
             namaSelect.innerHTML = '<option value="" disabled selected>-- Pilih Nama Anda --</option>';
 
@@ -761,8 +835,11 @@
         }
 
         function toggleKeteranganInput() {
-            const statusVal = document.querySelector('input[name="studentStatus"]:checked').value;
+            const statusChecked = document.querySelector('input[name="studentStatus"]:checked');
             const boxKet = document.getElementById('boxKeterangan');
+            if (!statusChecked || !boxKet) return;
+
+            const statusVal = statusChecked.value;
             if (statusVal === 'Sakit' || statusVal === 'Izin') {
                 boxKet.classList.remove('hidden');
             } else {
@@ -773,10 +850,15 @@
         function handleStudentSubmit(e) {
             e.preventDefault();
 
-            const kelas = document.getElementById('studentSelectKelas').value;
-            const nama = document.getElementById('studentSelectNama').value;
-            let status = document.querySelector('input[name="studentStatus"]:checked').value;
-            const keteranganInput = document.getElementById('studentInputKeterangan').value.trim();
+            const kelasSelect = document.getElementById('studentSelectKelas');
+            const namaSelect = document.getElementById('studentSelectNama');
+            const statusChecked = document.querySelector('input[name="studentStatus"]:checked');
+            const ketInput = document.getElementById('studentInputKeterangan');
+
+            const kelas = kelasSelect ? kelasSelect.value : '';
+            const nama = namaSelect ? namaSelect.value : '';
+            let status = statusChecked ? statusChecked.value : 'Hadir';
+            const keteranganInput = ketInput ? ketInput.value.trim() : '';
 
             if (!kelas || !nama) {
                 showToast("Silakan lengkapi Kelas dan Nama Anda!", "error");
@@ -788,10 +870,10 @@
                 const now = new Date();
                 const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-                const [startH, startM] = timeConfig.startTime.split(':').map(Number);
+                const [startH, startM] = (timeConfig.startTime || "06:30").split(':').map(Number);
                 const startMinutes = startH * 60 + startM;
 
-                const [endH, endM] = timeConfig.endTime.split(':').map(Number);
+                const [endH, endM] = (timeConfig.endTime || "14:00").split(':').map(Number);
                 const endMinutes = endH * 60 + endM;
 
                 if (currentMinutes < startMinutes) {
@@ -813,23 +895,29 @@
                 }
 
                 const btnSubmit = document.getElementById('btnStudentSubmit');
-                btnSubmit.disabled = true;
-                btnSubmit.innerHTML = '<i class="fa-solid fa-location-dot animate-ping"></i> Memeriksa Lokasi Sekolah...';
+                if (btnSubmit) {
+                    btnSubmit.disabled = true;
+                    btnSubmit.innerHTML = '<i class="fa-solid fa-location-dot animate-ping"></i> Memeriksa Lokasi Sekolah...';
+                }
 
                 navigator.geolocation.getCurrentPosition(
                     (pos) => {
                         const distance = calculateDistance(pos.coords.latitude, pos.coords.longitude, gpsConfig.lat, gpsConfig.lng);
                         if (distance > gpsConfig.radius) {
-                            btnSubmit.disabled = false;
-                            btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane text-xl"></i> KIRIM PRESENSI SEKARANG';
+                            if (btnSubmit) {
+                                btnSubmit.disabled = false;
+                                btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane text-xl"></i> KIRIM PRESENSI SEKARANG';
+                            }
                             showToast(`Gagal! Anda berada di luar area sekolah (${Math.round(distance)}m dari titik sekolah).`, "error");
                         } else {
                             processStudentSubmission(kelas, nama, status, keteranganInput);
                         }
                     },
                     (err) => {
-                        btnSubmit.disabled = false;
-                        btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane text-xl"></i> KIRIM PRESENSI SEKARANG';
+                        if (btnSubmit) {
+                            btnSubmit.disabled = false;
+                            btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane text-xl"></i> KIRIM PRESENSI SEKARANG';
+                        }
                         showToast("Aktifkan izin GPS/Lokasi di HP Anda untuk melakukan presensi!", "warning");
                     },
                     { enableHighAccuracy: true, timeout: 10000 }
@@ -840,7 +928,7 @@
         }
 
         function calculateDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371e3; // Earth radius in meters
+            const R = 6371e3;
             const φ1 = lat1 * Math.PI/180;
             const φ2 = lat2 * Math.PI/180;
             const Δφ = (lat2-lat1) * Math.PI/180;
@@ -858,13 +946,12 @@
             const jam = now.getHours();
             const menit = now.getMinutes();
 
-            // Auto Check Terlambat (Jika jam > 07.15 WIB)
             if (status === 'Hadir' && (jam > 7 || (jam === 7 && menit > 15))) {
                 status = 'Terlambat';
             }
 
             const tanggalStr = now.toLocaleDateString('id-ID');
-            const waktuStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
+            const waktuStr = formatIndonesianTime(now);
 
             const payload = {
                 timestamp: now.toISOString(),
@@ -877,25 +964,39 @@
             };
 
             const btnSubmit = document.getElementById('btnStudentSubmit');
-            btnSubmit.disabled = true;
-            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Mengirim Presensi...';
+            if (btnSubmit) {
+                btnSubmit.disabled = true;
+                btnSubmit.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Mengirim Presensi...';
+            }
 
             const finishProcess = (serverStatus) => {
                 payload.destination = serverStatus;
                 saveRecordLocally(payload);
 
-                document.getElementById('resNama').textContent = nama;
-                document.getElementById('resKelas').textContent = kelas;
-                document.getElementById('resStatus').textContent = status;
-                document.getElementById('resWaktu').textContent = waktuStr;
+                const resNama = document.getElementById('resNama');
+                const resKelas = document.getElementById('resKelas');
+                const resStatus = document.getElementById('resStatus');
+                const resWaktu = document.getElementById('resWaktu');
+                const modalSuccess = document.getElementById('modalSuccess');
 
-                document.getElementById('modalSuccess').classList.remove('hidden');
+                if (resNama) resNama.textContent = nama;
+                if (resKelas) resKelas.textContent = kelas;
+                if (resStatus) resStatus.textContent = status;
+                if (resWaktu) resWaktu.textContent = waktuStr;
 
-                document.getElementById('studentSelectNama').value = '';
-                document.getElementById('studentInputKeterangan').value = '';
+                if (modalSuccess) {
+                    modalSuccess.classList.remove('hidden', 'pointer-events-none');
+                }
 
-                btnSubmit.disabled = false;
-                btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane text-xl"></i> KIRIM PRESENSI SEKARANG';
+                const studentNamaSelect = document.getElementById('studentSelectNama');
+                const studentKetInput = document.getElementById('studentInputKeterangan');
+                if (studentNamaSelect) studentNamaSelect.value = '';
+                if (studentKetInput) studentKetInput.value = '';
+
+                if (btnSubmit) {
+                    btnSubmit.disabled = false;
+                    btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane text-xl"></i> KIRIM PRESENSI SEKARANG';
+                }
             };
 
             const targetUrl = gasWebhookUrl || DEFAULT_GAS_URL;
@@ -920,52 +1021,65 @@
         }
 
         function closeSuccessModal() {
-            document.getElementById('modalSuccess').classList.add('hidden');
+            const modal = document.getElementById('modalSuccess');
+            if (modal) {
+                modal.classList.add('hidden', 'pointer-events-none');
+            }
         }
 
         function promptAdminPin() {
             if (isAdminLoggedIn) {
                 switchView('admin');
             } else {
-                document.getElementById('modalPin').classList.remove('hidden');
-                document.getElementById('inputAdminPin').focus();
+                const modal = document.getElementById('modalPin');
+                const inputPin = document.getElementById('inputAdminPin');
+                if (modal) modal.classList.remove('hidden', 'pointer-events-none');
+                if (inputPin) inputPin.focus();
             }
         }
 
         function closePinModal() {
-            document.getElementById('modalPin').classList.add('hidden');
-            document.getElementById('inputAdminPin').value = '';
+            const modal = document.getElementById('modalPin');
+            const inputPin = document.getElementById('inputAdminPin');
+            if (modal) modal.classList.add('hidden', 'pointer-events-none');
+            if (inputPin) inputPin.value = '';
         }
 
         function verifyAdminPin(e) {
             e.preventDefault();
-            const pinVal = document.getElementById('inputAdminPin').value;
+            const inputPin = document.getElementById('inputAdminPin');
+            const pinVal = inputPin ? inputPin.value : '';
             if (pinVal === ADMIN_PIN_DEFAULT) {
                 isAdminLoggedIn = true;
                 closePinModal();
                 showToast("Berhasil masuk Portal Guru!", "success");
-                document.getElementById('navRoleLabel').textContent = "Dashboard Guru";
+                const roleLabel = document.getElementById('navRoleLabel');
+                if (roleLabel) roleLabel.textContent = "Dashboard Guru";
                 switchView('admin');
             } else {
                 showToast("PIN yang Anda masukkan salah!", "error");
-                document.getElementById('inputAdminPin').value = '';
+                if (inputPin) inputPin.value = '';
             }
         }
 
         function switchView(viewName) {
+            const viewStudent = document.getElementById('viewStudent');
+            const viewAdmin = document.getElementById('viewAdmin');
+
             if (viewName === 'admin') {
-                document.getElementById('viewStudent').classList.add('hidden');
-                document.getElementById('viewAdmin').classList.remove('hidden');
+                if (viewStudent) viewStudent.classList.add('hidden');
+                if (viewAdmin) viewAdmin.classList.remove('hidden');
                 fetchOnlineLogsFromGas();
             } else {
-                document.getElementById('viewAdmin').classList.add('hidden');
-                document.getElementById('viewStudent').classList.remove('hidden');
+                if (viewAdmin) viewAdmin.classList.add('hidden');
+                if (viewStudent) viewStudent.classList.remove('hidden');
             }
         }
 
         function logoutAdmin() {
             isAdminLoggedIn = false;
-            document.getElementById('navRoleLabel').textContent = "Portal Guru";
+            const roleLabel = document.getElementById('navRoleLabel');
+            if (roleLabel) roleLabel.textContent = "Portal Guru";
             switchView('student');
             showToast("Keluar dari Portal Guru.", "info");
         }
@@ -977,19 +1091,23 @@
                 btn.classList.add('text-slate-500');
             });
 
-            document.getElementById('secAdmin-' + tabId).classList.remove('hidden');
+            const targetSec = document.getElementById('secAdmin-' + tabId);
             const activeBtn = document.getElementById('tabAdmin-' + tabId);
-            activeBtn.classList.add('border-b-2', 'border-emerald-600', 'text-emerald-700', 'bg-emerald-50');
-            activeBtn.classList.remove('text-slate-500');
+
+            if (targetSec) targetSec.classList.remove('hidden');
+            if (activeBtn) {
+                activeBtn.classList.add('border-b-2', 'border-emerald-600', 'text-emerald-700', 'bg-emerald-50');
+                activeBtn.classList.remove('text-slate-500');
+            }
         }
 
         function saveRecordLocally(data) {
             localLogs.unshift(data);
-            localStorage.setItem('MTS_PRESENSI_LOGS', JSON.stringify(localLogs));
+            safeSetStorage('MTS_PRESENSI_LOGS', JSON.stringify(localLogs));
         }
 
         function loadLogsFromLocalStorage() {
-            const saved = localStorage.getItem('MTS_PRESENSI_LOGS');
+            const saved = safeGetStorage('MTS_PRESENSI_LOGS');
             if (saved) {
                 try { localLogs = JSON.parse(saved); } catch(e) { localLogs = []; }
             }
@@ -1017,8 +1135,8 @@
                 try {
                     data = JSON.parse(rawText);
                 } catch(jsonErr) {
-                    console.error("Respon Apps Script bukan JSON:", rawText);
-                    throw new Error("Apps Script belum di-Deploy ke Versi Baru (Merespon Teks, bukan JSON)");
+                    showToast("Apps Script merespon teks. Deploy versi baru di Apps Script!", "error");
+                    throw new Error("Apps Script belum di-Deploy ke Versi Baru.");
                 }
 
                 if (Array.isArray(data)) {
@@ -1026,12 +1144,9 @@
                     showToast(`Berhasil sinkronisasi ${data.length} data dari Spreadsheet!`, "success");
                 } else if (data && data.error) {
                     throw new Error("GAS Error: " + data.error);
-                } else {
-                    throw new Error("Format data tidak sesuai.");
                 }
             } catch (err) {
                 console.error("Gagal sinkronisasi dari Spreadsheet:", err);
-                showToast("Gagal Sync: " + err.message, "error");
             } finally {
                 if (btnSync) {
                     btnSync.disabled = false;
@@ -1041,48 +1156,76 @@
             }
         }
 
-        function getFullRosterWithStatus() {
-            const today = new Date();
-            const todayStr = today.toLocaleDateString('id-ID');
-            const todayParts = todayStr.split('/').map(p => p.trim());
-            
-            const isToday = (dateVal) => {
-                if (!dateVal) return false;
-                const dStr = String(dateVal);
-                const parts = dStr.split('/').map(p => p.trim());
-                if (parts.length === 3 && todayParts.length === 3) {
-                    return parseInt(parts[0]) === parseInt(todayParts[0]) &&
-                           parseInt(parts[1]) === parseInt(todayParts[1]) &&
-                           parseInt(parts[2]) === parseInt(todayParts[2]);
+        function normalizeToYYYYMMDD(item) {
+            if (!item) return "";
+            if (item.timestamp) {
+                const d = new Date(item.timestamp);
+                if (!isNaN(d.getTime())) {
+                    const yyyy = d.getFullYear();
+                    const mm = String(d.getMonth() + 1).padStart(2, '0');
+                    const dd = String(d.getDate()).padStart(2, '0');
+                    return `${yyyy}-${mm}-${dd}`;
                 }
-                return dStr.includes(todayStr) || todayStr.includes(dStr);
-            };
+            }
+            if (item.tanggal) {
+                const cleanStr = String(item.tanggal).trim().replace(/\./g, '/').replace(/-/g, '/');
+                const parts = cleanStr.split('/');
+                if (parts.length === 3) {
+                    let yyyy, mm, dd;
+                    if (parts[0].length === 4) {
+                        yyyy = parts[0];
+                        mm = parts[1].padStart(2, '0');
+                        dd = parts[2].padStart(2, '0');
+                    } else {
+                        dd = parts[0].padStart(2, '0');
+                        mm = parts[1].padStart(2, '0');
+                        yyyy = parts[2];
+                    }
+                    return `${yyyy}-${mm}-${dd}`;
+                }
+            }
+            return "";
+        }
+
+        function getFullRosterWithStatus() {
+            const filterDateInput = document.getElementById('filterTanggalTable');
+            let targetDateStr = filterDateInput ? filterDateInput.value : "";
+            
+            if (!targetDateStr) {
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
+                const dd = String(today.getDate()).padStart(2, '0');
+                targetDateStr = `${yyyy}-${mm}-${dd}`;
+            }
 
             let fullList = [];
             const loggedMap = new Map();
-
-            // Gabungkan log online dari Google Sheets & log lokal HP
             const combinedLogs = [...onlineLogs, ...localLogs];
 
-            combinedLogs.forEach(item => {
-                if (isToday(item.tanggal)) {
-                    const key = `${String(item.kelas).trim().toUpperCase()}_${String(item.nama).trim().toLowerCase()}`;
-                    if (!loggedMap.has(key)) {
-                        loggedMap.set(key, {
-                            timestamp: item.timestamp || new Date().toISOString(),
-                            tanggal: item.tanggal || todayStr,
-                            waktu: item.waktu || '-',
-                            kelas: String(item.kelas).trim(),
-                            nama: String(item.nama).trim(),
-                            status: item.status || 'Hadir',
-                            keterangan: item.keterangan || '-',
-                            destination: item.destination || 'Spreadsheet'
-                        });
-                    }
-                }
-            });
+            for (let i = combinedLogs.length - 1; i >= 0; i--) {
+                const item = combinedLogs[i];
+                const itemDateStr = normalizeToYYYYMMDD(item);
 
-            Object.keys(DATA_MURID).forEach(kelas => {
+                if (itemDateStr === targetDateStr) {
+                    const key = `${String(item.kelas).trim().toUpperCase()}_${String(item.nama).trim().toLowerCase()}`;
+                    loggedMap.set(key, {
+                        timestamp: item.timestamp || new Date().toISOString(),
+                        tanggal: item.tanggal || targetDateStr,
+                        waktu: item.waktu || '-',
+                        kelas: String(item.kelas).trim(),
+                        nama: String(item.nama).trim(),
+                        status: item.status || 'Hadir',
+                        keterangan: item.keterangan || '-',
+                        destination: item.destination || 'Spreadsheet'
+                    });
+                }
+            }
+
+            const dateParts = targetDateStr.split('-');
+            const displayDateFormatted = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : targetDateStr;
+
+            Object.keys(DATA_MURID || {}).forEach(kelas => {
                 DATA_MURID[kelas].forEach(nama => {
                     const key = `${String(kelas).trim().toUpperCase()}_${String(nama).trim().toLowerCase()}`;
                     if (loggedMap.has(key)) {
@@ -1090,7 +1233,7 @@
                     } else {
                         fullList.push({
                             timestamp: new Date().toISOString(),
-                            tanggal: todayStr,
+                            tanggal: displayDateFormatted,
                             waktu: '-',
                             kelas: kelas,
                             nama: nama,
@@ -1107,8 +1250,13 @@
 
         function renderAdminTable() {
             const tbody = document.getElementById('tableBodyAbsensi');
-            const filterKelas = document.getElementById('filterKelasTable').value;
-            const filterStatus = document.getElementById('filterStatusTable').value;
+            const filterKelasEl = document.getElementById('filterKelasTable');
+            const filterStatusEl = document.getElementById('filterStatusTable');
+
+            if (!tbody) return;
+
+            const filterKelas = filterKelasEl ? filterKelasEl.value : 'ALL';
+            const filterStatus = filterStatusEl ? filterStatusEl.value : 'ALL';
             tbody.innerHTML = '';
 
             const allRoster = getFullRosterWithStatus();
@@ -1122,11 +1270,17 @@
                 else if (i.status === 'Alpha') cAlpha++;
             });
 
-            document.getElementById('statHadir').textContent = cHadir;
-            document.getElementById('statSakit').textContent = cSakit;
-            document.getElementById('statIzin').textContent = cIzin;
-            document.getElementById('statTerlambat').textContent = cTerlambat;
-            document.getElementById('statAlpha').textContent = cAlpha;
+            const statHadir = document.getElementById('statHadir');
+            const statSakit = document.getElementById('statSakit');
+            const statIzin = document.getElementById('statIzin');
+            const statTerlambat = document.getElementById('statTerlambat');
+            const statAlpha = document.getElementById('statAlpha');
+
+            if (statHadir) statHadir.textContent = cHadir;
+            if (statSakit) statSakit.textContent = cSakit;
+            if (statIzin) statIzin.textContent = cIzin;
+            if (statTerlambat) statTerlambat.textContent = cTerlambat;
+            if (statAlpha) statAlpha.textContent = cAlpha;
 
             let filtered = allRoster;
             if (filterKelas !== 'ALL') {
@@ -1162,7 +1316,7 @@
                     <td class="p-3 text-slate-500 text-xs">${row.keterangan}</td>
                     <td class="p-3 text-slate-400 text-xs font-mono">${row.destination || '-'}</td>
                     <td class="p-3 text-center">
-                        <button onclick="kirimWaOrtu('${safeNama}', '${row.kelas}', '${row.status}', '${safeKet}', '${row.waktu}')" class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold py-1.5 px-3 rounded-xl text-xs inline-flex items-center gap-1.5 shadow-sm transition">
+                        <button type="button" onclick="kirimWaOrtu('${safeNama}', '${row.kelas}', '${row.status}', '${safeKet}', '${row.waktu}')" class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold py-1.5 px-3 rounded-xl text-xs inline-flex items-center gap-1.5 shadow-sm transition cursor-pointer">
                             <i class="fa-brands fa-whatsapp text-sm text-emerald-200"></i> Kirim WA
                         </button>
                     </td>
@@ -1172,7 +1326,8 @@
         }
 
         function kirimWaOrtu(nama, kelas, status, keterangan, waktu) {
-            const dateStr = document.getElementById('studentDateStr').textContent || new Date().toLocaleDateString('id-ID');
+            const dateEl = document.getElementById('studentDateStr');
+            const dateStr = dateEl ? dateEl.textContent : formatIndonesianDate(new Date());
             
             let statusLabel = status;
             if (status === 'Alpha') statusLabel = 'ALPHA (Belum/Tidak Melakukan Presensi)';
@@ -1223,59 +1378,84 @@ Wassalamu'alaikum Wr. Wb.
             
             const pageUrl = window.location.href;
 
-            new QRCode(qrBox, {
-                text: pageUrl,
-                width: 160,
-                height: 160,
-                colorDark: "#047857",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
-            });
+            try {
+                if (typeof QRCode !== 'undefined') {
+                    new QRCode(qrBox, {
+                        text: pageUrl,
+                        width: 160,
+                        height: 160,
+                        colorDark: "#047857",
+                        colorLight: "#ffffff"
+                    });
+                } else {
+                    qrBox.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(pageUrl)}" alt="QR Code" class="w-40 h-40 mx-auto rounded-xl shadow border border-emerald-200"/>`;
+                }
+            } catch (err) {
+                qrBox.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(pageUrl)}" alt="QR Code" class="w-40 h-40 mx-auto rounded-xl shadow border border-emerald-200"/>`;
+            }
         }
 
         function loadSavedGasUrl() {
             const activeUrl = gasWebhookUrl || DEFAULT_GAS_URL;
-            if (activeUrl) {
-                document.getElementById('inputGasUrl').value = activeUrl;
+            const inputGas = document.getElementById('inputGasUrl');
+            if (activeUrl && inputGas) {
+                inputGas.value = activeUrl;
             }
         }
 
         function saveGasUrl() {
-            const url = document.getElementById('inputGasUrl').value.trim();
+            const inputGas = document.getElementById('inputGasUrl');
+            const url = inputGas ? inputGas.value.trim() : '';
             gasWebhookUrl = url;
-            localStorage.setItem('MTS_GAS_URL', url);
+            safeSetStorage('MTS_GAS_URL', url);
             showToast(url ? "Webhook URL berhasil disimpan!" : "URL dikosongkan.", "info");
         }
 
         function loadGpsSettingsUI() {
-            document.getElementById('gpsEnableToggle').checked = gpsConfig.enabled;
-            document.getElementById('gpsLat').value = gpsConfig.lat || '';
-            document.getElementById('gpsLng').value = gpsConfig.lng || '';
-            document.getElementById('gpsRadius').value = gpsConfig.radius || 150;
+            const toggle = document.getElementById('gpsEnableToggle');
+            const lat = document.getElementById('gpsLat');
+            const lng = document.getElementById('gpsLng');
+            const rad = document.getElementById('gpsRadius');
+            if (toggle) toggle.checked = gpsConfig.enabled;
+            if (lat) lat.value = gpsConfig.lat || '';
+            if (lng) lng.value = gpsConfig.lng || '';
+            if (rad) rad.value = gpsConfig.radius || 150;
         }
 
         function loadTimeSettingsUI() {
-            document.getElementById('timeEnableToggle').checked = timeConfig.enabled;
-            document.getElementById('timeStartInput').value = timeConfig.startTime || "06:30";
-            document.getElementById('timeEndInput').value = timeConfig.endTime || "14:00";
+            const toggle = document.getElementById('timeEnableToggle');
+            const start = document.getElementById('timeStartInput');
+            const end = document.getElementById('timeEndInput');
+            if (toggle) toggle.checked = timeConfig.enabled;
+            if (start) start.value = timeConfig.startTime || "06:30";
+            if (end) end.value = timeConfig.endTime || "14:00";
         }
 
         function saveTimeSettings() {
-            timeConfig.enabled = document.getElementById('timeEnableToggle').checked;
-            timeConfig.startTime = document.getElementById('timeStartInput').value || "06:30";
-            timeConfig.endTime = document.getElementById('timeEndInput').value || "14:00";
+            const toggle = document.getElementById('timeEnableToggle');
+            const start = document.getElementById('timeStartInput');
+            const end = document.getElementById('timeEndInput');
 
-            localStorage.setItem('MTS_TIME_CONFIG', JSON.stringify(timeConfig));
+            timeConfig.enabled = toggle ? toggle.checked : true;
+            timeConfig.startTime = start ? start.value : "06:30";
+            timeConfig.endTime = end ? end.value : "14:00";
+
+            safeSetStorage('MTS_TIME_CONFIG', JSON.stringify(timeConfig));
             showToast(`Pengaturan Batas Waktu berhasil disimpan (${timeConfig.startTime} - ${timeConfig.endTime} WIB)!`, "success");
         }
 
         function saveGpsSettings() {
-            gpsConfig.enabled = document.getElementById('gpsEnableToggle').checked;
-            gpsConfig.lat = parseFloat(document.getElementById('gpsLat').value) || 0;
-            gpsConfig.lng = parseFloat(document.getElementById('gpsLng').value) || 0;
-            gpsConfig.radius = parseInt(document.getElementById('gpsRadius').value) || 150;
+            const toggle = document.getElementById('gpsEnableToggle');
+            const lat = document.getElementById('gpsLat');
+            const lng = document.getElementById('gpsLng');
+            const rad = document.getElementById('gpsRadius');
 
-            localStorage.setItem('MTS_GPS_CONFIG', JSON.stringify(gpsConfig));
+            gpsConfig.enabled = toggle ? toggle.checked : false;
+            gpsConfig.lat = parseFloat(lat ? lat.value : 0) || 0;
+            gpsConfig.lng = parseFloat(lng ? lng.value : 0) || 0;
+            gpsConfig.radius = parseInt(rad ? rad.value : 150) || 150;
+
+            safeSetStorage('MTS_GPS_CONFIG', JSON.stringify(gpsConfig));
             showToast("Pengaturan Kunci GPS berhasil disimpan!", "success");
         }
 
@@ -1286,8 +1466,10 @@ Wassalamu'alaikum Wr. Wb.
             }
             showToast("Mendeteksi koordinat lokasi saat ini...", "info");
             navigator.geolocation.getCurrentPosition(pos => {
-                document.getElementById('gpsLat').value = pos.coords.latitude.toFixed(6);
-                document.getElementById('gpsLng').value = pos.coords.longitude.toFixed(6);
+                const lat = document.getElementById('gpsLat');
+                const lng = document.getElementById('gpsLng');
+                if (lat) lat.value = pos.coords.latitude.toFixed(6);
+                if (lng) lng.value = pos.coords.longitude.toFixed(6);
                 showToast("Koordinat lokasi berhasil didapatkan!", "success");
             }, err => {
                 showToast("Gagal mengambil lokasi. Pastikan GPS HP aktif!", "error");
@@ -1319,7 +1501,7 @@ Wassalamu'alaikum Wr. Wb.
 
         function clearLocalLogsPrompt() {
             localLogs = [];
-            localStorage.removeItem('MTS_PRESENSI_LOGS');
+            try { localStorage.removeItem('MTS_PRESENSI_LOGS'); } catch(e) {}
             renderAdminTable();
             showToast("Log presensi berhasil dibersihkan.", "info");
         }
@@ -1329,6 +1511,8 @@ Wassalamu'alaikum Wr. Wb.
             const toastMsg = document.getElementById('toastMessage');
             const toastIcon = document.getElementById('toastIcon');
 
+            if (!toast || !toastMsg || !toastIcon) return;
+
             toastMsg.textContent = message;
 
             if (type === 'success') toastIcon.className = "fa-solid fa-circle-check text-emerald-400 text-xl";
@@ -1336,14 +1520,41 @@ Wassalamu'alaikum Wr. Wb.
             else if (type === 'warning') toastIcon.className = "fa-solid fa-triangle-exclamation text-amber-400 text-xl";
             else toastIcon.className = "fa-solid fa-circle-info text-blue-400 text-xl";
 
-            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
             toast.classList.add('translate-y-0', 'opacity-100');
 
             setTimeout(() => {
                 toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
             }, 3200);
         }
+
+        // Guaranteed Initialization Engine
+        let isAppInitialized = false;
+        function initApp() {
+            runSafely(updateClock);
+            runSafely(updateDateDisplay);
+            runSafely(loadMasterDataMurid);
+            runSafely(setDefaultFilterTanggal);
+            runSafely(loadLogsFromLocalStorage);
+            runSafely(loadSavedGasUrl);
+            runSafely(populateKelasDropdowns);
+            runSafely(loadGpsSettingsUI);
+            runSafely(loadTimeSettingsUI);
+            runSafely(generatePosterQR);
+
+            if (!isAppInitialized) {
+                isAppInitialized = true;
+                setInterval(() => runSafely(updateClock), 1000);
+            }
+        }
+
+        // Direct Execution on Load
+        initApp();
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        }
+        window.addEventListener('load', initApp);
     </script>
 </body>
 </html>
